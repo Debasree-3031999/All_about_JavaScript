@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+    <input type="text" name="" id="name"/>
+    <input type="password" name="" id="password">
+    <input type="submit" value="submit">
+    </form>
+</body>
+</html>
+<script>
+    let form=document.getElementById('form');
+    let name = document.getElementById('name');
+    let pwd = document.getElementById('password');
+
+    form.addEventListener('submit',function (event){
+        event.preventDefault()
+    //  console.log("hvgyugf",name.value,pwd.value)
+    })
+
+    const life=[1,2,3,4]
+
+    localStorage.setItem('key',JSON.stringify(life))
+
+   let data=JSON.parse(localStorage.getItem('key')) ;
+//    console.log(data)
+
+function hello(name){
+    console.log(`say hello ${name}`)
+}
+setTimeout(hello,3000, "debasree")
+
+</script>

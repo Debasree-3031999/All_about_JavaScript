@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .color {
+    background-color: rgb(0, 0, 0);
+  }
+</style>
+
+<body>
+  <!-- want 3 button with same class and same written use(btn.class*no I want button{write what i want }) -->
+  <h1>javascript</h1>
+  <button id="botam">click me</button>
+  <ol>
+    <li>fghdt</li>
+    <li>hfg</li>
+    <li>dhth</li>
+    <li>htrs</li>
+    <li>ghfh</li>
+  </ol>
+  <form class="form">
+    <label >Enter a Number</label>
+    <input type="text" name="" id="amount">
+    <button id="btn" type="submit">submit</button>
+  </form>
+
+</body>
+
+</html>
+
+<!-- <script src="./DOM.js"></script> -->
+<script>
+  let input = document.getElementById('amooount');
+  //console.log(input.getAttribute('id'))
+  document.body.style.backgroundColor = "pink";
+  document.getElementById('btn').style.color = 'blue'
+  document.querySelector('h1').style.color = 'red';
+  document.querySelector('label').style.fontSize = '4vw';
+
+  const item = document.getElementsByTagName('li')
+  // console.log(item)
+  item[0].style.color = 'yellow'
+  let spreadItem = [...item]
+  // console.log(spreadItem)
+  spreadItem.forEach((el) => {
+    console.log(el)
+  })
+
+  // document.querySelector('li:first-child').nextSibling.nextSibling.style.fontSize='3vw';
+  document.querySelector('li:first-child').nextElementSibling.style.fontSize = '5vw'
+  // document.querySelector('li:last-child').previousSibling.previousSibling.style.fontSize = '4vw'
+  document.querySelector('li:last-child').previousElementSibling.style.fontSize = '3vw'
+
+  var print = document.querySelector('#btn').textContent;
+  // console.log(print)
+  // console.dir(document)
+
+  const bodyDiv = document.createElement('div');//dynamically create element
+  const text = document.createTextNode("hello beautiful");
+  bodyDiv.appendChild(text);
+  document.body.appendChild(bodyDiv)
+
+  const header = document.createElement('h2');
+  header.innerText = `hello beautifullll`;
+  document.body.prepend(header)
+
+  const removElement = document.querySelector('ol');
+  removElement.remove();
+
+  //////click event//////////
+  const btn = document.querySelector('#botam')
+  const headerrr = document.querySelector('h1');
+  //  btn.addEventListener('click',()=>{
+  // headerrr.style.backgroundColor='black';
+  // console.log('clicked happen')
+  //  });
+
+  // btn.addEventListener('mousedown', () => {
+  //     headerrr.style.backgroundColor = 'black';
+  //     console.log('mousedown happen')
+  //   });
+
+  //  btn.addEventListener('mouseup', () => {
+  //     headerrr.style.backgroundColor = 'black';
+  //     console.log('mouseup happen')
+  //   })
+
+  headerrr.addEventListener('mouseenter', () => {
+    // headerrr.style.backgroundColor = 'black';
+    headerrr.classList.add('color')
+  })
+
+  headerrr.addEventListener('mouseleave', () => {
+    // headerrr.style.backgroundColor = 'white';
+    headerrr.classList.remove('color')
+  })
+
+const amount=document.getElementById('amount');
+// amount.addEventListener('keypress', ()=>{
+//   console.log('I pressed a key')
+// });
+
+  // amount.addEventListener('keydown', () => {
+  //   console.log('I down a key')
+  // });
+
+  amount.addEventListener('keyup', () => {
+      console.log('I up a key',amount.value)
+    })
+</script>
