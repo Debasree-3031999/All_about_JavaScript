@@ -85,7 +85,24 @@ localStorage.clear();
 //setInterval - runs function repeatedly, at specific intervals
 //clearInterval
 
-//the DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed ,without waiting for stylesheet images to finish loading
+//the DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed ,without waiting for stylesheet images to finish loading 
+
+       //the load event is fired when the whole page has loaded ,including all dependent resources such as stylesheet and images. 
+
+ scroll Event - on element or document
+
+ window.addEventListener('scroll',function(){
+    console.log(window.scrollY + "px")//vertical axis;
+
+    console.log(window.scrollX + "px")//horizontal axis
+ })   
+
+ //we can know browser screen height width by consoling (window.innerHeight),(window.innerWidth)   
+
+ //resize event fires when the document view(window) has been resized
+ //syntax--> window.addEventListener('resize",function(){
+    console.log(window.innerWidth)
+ })
 
 
 

@@ -1,0 +1,8 @@
+.navber{
+    display: flex;
+    justify-content: space-around;
+}
+.nav-links{
+    display: flex;
+    justify-content: space-between;
+}

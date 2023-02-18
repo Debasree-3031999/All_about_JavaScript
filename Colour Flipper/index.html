@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+<nav>
+    <div class="navber">
+        <h4>Color Flipper</h4>
+        <ul class="nav-links">
+            <li><a href="index.html">Simple 
+                 
+            </a></li>
+            <li><a href="hex.html">Hex</a></li>
+        </ul>
+    </div>
+</nav>
+
+    <main>
+        <div class="container">
+            <h2>background color: <span class="color
+                "></span></h2>
+                <button id="btn">click me</button>
+        </div>
+    </main>
+</body>
+
+</html>
+<script>
+    const colors=["green","pink","blue","red","#ff976ff5","orange","brown","white","#456ff5","#ff67ff8"];
+ 
+    let btn=document.querySelector('#btn');
+    let color=document.querySelector('.color');
+
+ btn.addEventListener("click",function(){
+  let randomNumber=generateNum()
+  console.log(randomNumber)
+  document.body.style.backgroundColor=colors[randomNumber];
+  color.textContent=colors[randomNumber]
+ });
+ 
+ function generateNum(){
+    return Math.floor(Math.random()*colors.length)
+ }
+
+</script>
