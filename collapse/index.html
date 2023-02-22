@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background-color: aquamarine;
+            width: 400px;
+            height: 200px;
+            margin: auto;
+
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+        }
+        .plus{
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .answer{
+            visibility: hidden;
+        }
+        .on-ans{
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="question">
+            <h2>question</h2>
+            <p class="plus">+</p>
+        </div>
+        <div class="answer">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus suscipit nobis nulla enim
+                libero, doloribus ipsum voluptas explicabo iusto exercitationem soluta earum quae quaerat autem
+                veritatis debitis
+                itaque placeat sint!</p>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+let plus=document.querySelector('.plus');
+let ans=document.querySelector(".answer");
+
+plus.addEventListener("click",()=>{
+    if(plus.textContent==="+"){
+         plus.textContent = "";
+        plus.innerHTML = "-";
+        ans.classList.add('on-ans')
+    }
+    else{
+        plus.innerHTML = "";
+        plus.innerHTML='+';
+        ans.classList.remove('on-ans')
+    }
+   
+})
+</script>

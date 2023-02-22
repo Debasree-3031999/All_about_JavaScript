@@ -1,28 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-   <div class="container">
-    <h1>Counter : <span id="count">0</span></h1>
-    <div class="button-div"><button id=" btn-decrease">Decrease</button>
-    <button type="reset" id="btn-reset">Reset</button>
-<button id="btn-increase">Increase</button></div>
-   </div> 
+    <div class="container">
+        <h1>Counter : <span id="count"></span></h1>
+        <div class="button-div"><button class="btn" onclick=decrease()>Decrease</button>
+            <button class="btn" onclick=reset()>Reset</button>
+            <button class="btn" onclick=increase()>Increase</button>
+        </div>
+    </div>
 </body>
+
 </html>
 <script>
     //set initial value
 
+    let value = 0;
 
     //select value and buttons
-    let count=document.querySelector('.count');
-    let btns=document.querySelector('.btn');
+    let count = document.querySelector('#count');
+    count.textContent = value;
+    let btn = document.querySelector('.btn');
+
+    function decrease() {
+        count.textContent = --value;
+        setClr()
+    };
+    function increase() {
+        console.log("vff")
+        count.textContent = ++value;
+        setClr()
+
+    }
+    function reset() {
+        value = 0
+        count.textContent = value;
+        setClr()
+
+    }
+    function setClr() {
+        if (value < 0) {
+            count.style.color = "red"
+
+        }
+        if (value > 0) {
+            count.style.color = "green"
+
+        }
+        if (value === 0) {
+            count.style.color = "black"
+
+        }
+    }
 
 
-    
+
 </script>
