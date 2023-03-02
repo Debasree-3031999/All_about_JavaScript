@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registration page</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+    <nav class="navbar">
+        <button onclick="hello()">Registration Page</button>
+        <button onclick="gello()">Dashboard Page</button>
+        <button onclick="chello()">Vaccinated Page</button>
+    </nav>
+    
+    <div class="registrationContainer">
+        <h2>Registration Form</h2>
+        <hr>
+        <form id="reg">
+            <label>Unique Id :</label>
+            <input type="text" name="" id="uniqueId">
+            <br>
+            <label>Name :</label>
+            <input type="text" name="" id="name">
+            <br>
+            <label>Age</label>
+            <input type="number" name="" id="age">
+            <br>
+            <label>Designation</label>
+            <br>
+            <input onclick="myFun()" type="radio" name="" id="desiEmployee"> <label>Employee</label>
+            <br>
+            <input onclick="myFun()" type="radio" name="" id="desiStudent">
+            <label>Student</label>
+            <br>
+            <label>Priority - </label>
+            <br>
+            <label>P0</label>
+            <input onclick="priorityFun()" type="radio" name="P0" id="P0">
+            <br>
+            <label>P1</label>
+            <input onclick="priorityFun()" type="radio" name="" id="P1">
+            <br>
+            <label>P2</label>
+            <input onclick="priorityFun()" type="radio" name="" id="P2">
+            <br>
+            <label>P3</label>
+            <input onclick="priorityFun()" type="radio" name="" id="P3">
+            <br>
+            <select id="vaccine">
+                <option>vaccine</option>
+                <option id="Covishield">Covishield</option>
+                <option id="Covaxin">Covaxin</option>
+                <option id="Sputnik">Sputnik</option>
+            </select>
+            <br>
+            <input id="submit" type="submit" value="Register">
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    function hello() {
+        window.location.assign('./register.html')
+    }
+    function gello() {
+        window.location.assign('./dashboard.html')
+    }
+    function chello() {
+        window.location.assign("./vaccinated.html")
+    }
+
+    let arr = JSON.parse(localStorage.getItem("registerData")) || [];
+
+
+
+    let student = document.getElementById("desiStudent");
+    let employee = document.getElementById("desiEmployee");
+    let p0 = document.getElementById('P0')
+    let p1 = document.getElementById('P1')
+    let p2 = document.getElementById('P2')
+    let p3 = document.getElementById('P3');
+
+    function myFun() {
+        if (student.checked == true) {
+            employee.disabled = true;
+        }
+        if (employee.checked == true) {
+            student.disabled = true;
+        }
+    }
+    function priorityFun() {
+        if (p0.checked == true) {
+            p1.disabled = true;
+            p2.disabled = true;
+            p3.disabled = true;
+        }
+        if (p1.checked == true) {
+            p0.disabled = true;
+            p2.disabled = true;
+            p3.disabled = true;
+        }
+        if (p2.checked == true) {
+            p1.disabled = true;
+            p0.disabled = true;
+            p3.disabled = true;
+        }
+        if (p3.checked == true) {
+            p1.disabled = true;
+            p2.disabled = true;
+            p0.disabled = true;
+        }
+    }
+
+
+    document.addEventListener("submit", function (event) {
+        event.preventDefault()
+
+        let obj = {};
+        let student = document.getElementById("desiStudent");
+        let employee = document.getElementById("desiEmployee");
+        let vaccine = document.getElementById('vaccine').value;
+        let name = document.getElementById('name').value;
+        let age = document.getElementById('age').value;
+        let uniqueId = document.getElementById('uniqueId').value;
+        let p0 = document.getElementById('P0')
+        let p1 = document.getElementById('P1')
+        let p2 = document.getElementById('P2')
+        let p3 = document.getElementById('P3');
+
+        if ((name == "") || (age == "") || (student.checked == false && employee.checked == false) || (p0.checked == false && p1.checked == false && p2.checked == false && p3.checked == false) || (vaccine == "" || vaccine == "vaccine") || (uniqueId == "")) {
+            alert("please fill all the filled")
+        }
+        else if (name.length < 4) {
+            alert("name should be at least 4 characters")
+
+        }
+        else if (age < 18 || age > 40) {
+            alert("your age should be between 18 to 40")
+        }
+        else {
+            if (arr.length > 0) {
+                var storeId = [];
+                for (var j = 0; j < arr.length; j++) {
+                    console.log("hdgh", arr[j].uniqueId)
+                    if (uniqueId == arr[j].uniqueId) {
+                        storeId.push(arr[j].uniqueId)
+                    }
+                }
+                // console.log(storeId.length)
+                if (storeId.length >= 1) {
+                    alert("ID: Should be unique, duplicate ID should not be allowed.");
+                }
+                else {
+                    // console.log(typeof p0.checked,p0.checked)
+                    obj = {
+                        uniqueId: uniqueId,
+                        name: name,
+                        age: age,
+                        designation: employee ? "employee" : "student",
+                        priority: p0.checked ? "high" : p1.checked ? "medium" : p2.checked ? "medium" : "less",
+                        vaccine: vaccine
+                    }
+                    // console.log(name.length, age, vaccine, student.checked, employee.checked, p0.checked, p1.checked, p2.checked, p3.checked, obj)
+                    arr.push(obj)
+                    localStorage.setItem("registerData", JSON.stringify(arr))
+                    window.location.assign("./dashboard.html")
+                }
+
+            }
+            else {
+                obj = {
+                    uniqueId: uniqueId,
+                    name: name,
+                    age: age,
+                    designation: employee ? "employee" : "student",
+                    priority: p0 ? "high" : p1 ? "medium" : p2 ? "medium" : "less",
+                    vaccine: vaccine
+                }
+                console.log(name.length, age, vaccine, student.checked, employee.checked, p0.checked, p1.checked, p2.checked, p3.checked, obj)
+                arr.push(obj)
+                localStorage.setItem("registerData", JSON.stringify(arr))
+                window.location.assign("./dashboard.html")
+            }
+        }
+    })
+</script>

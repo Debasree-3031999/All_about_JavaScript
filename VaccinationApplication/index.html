@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vaccination</title>
+</head>
+<link rel="stylesheet" href="./style.css">
+<body>
+   <nav  class="navbar">
+    
+<button onclick="hello()" >Registration Page</button>
+<button onclick="gello()">Dashboard Page</button>
+<button onclick="chello()">Vaccinated Page</button>
+   </nav> 
+</body>
+</html>
+<script>
+    function hello(){
+        window.location.assign('./register.html')
+    }
+    function gello(){
+        window.location.assign('./dashboard.html')
+    }
+    function chello(){
+        window.location.assign("./vaccinated.html")
+    }
+</script>

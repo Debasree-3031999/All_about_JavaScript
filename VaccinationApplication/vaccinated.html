@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<link rel="stylesheet" href="./style.css">
+
+<body>
+    <nav class="navbar">
+    
+        <button onclick="hello()">Registration Page</button>
+        <button onclick="gello()">Dashboard Page</button>
+        <button onclick="chello()">Vaccinated Page</button>
+    </nav>
+    
+    <div class="vaccinatePage">
+    <table id="table">
+        <thead>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Designation</th>
+            <th>Priority</th>
+            <th>Vaccine</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    </div>
+</body>
+</html>
+<script>
+    function hello() {
+            window.location.assign('./register.html')
+        }
+        function gello() {
+            window.location.assign('./dashboard.html')
+        }
+        function chello() {
+            window.location.assign("./vaccinated.html")
+        }
+
+let vaccinateData=JSON.parse(localStorage.getItem("VaccinateData"))
+console.log("vaccinate wala data ageya",vaccinateData);
+
+vaccinateData.map((e)=>{
+    
+    var tr=document.createElement('tr');
+    var td1=document.createElement('td');
+    td1.innerHTML=e.name;
+
+    var td2 = document.createElement('td');
+    td2.innerHTML = e.age;
+
+    var td3 = document.createElement('td');
+    td3.innerHTML = e.designation;
+
+    var td4 = document.createElement('td');
+    td4.innerHTML = e.priority;
+
+    var td5 = document.createElement('td');
+    td5.innerHTML = e.vaccine;
+
+    tr.appendChild(td1)
+    tr.appendChild(td2)
+    tr.appendChild(td3)
+    tr.appendChild(td4)
+    tr.appendChild(td5)
+
+    document.getElementById('table').appendChild(tr)
+
+})
+</script>
+

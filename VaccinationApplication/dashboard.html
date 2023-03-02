@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>
+    <nav class="navbar">
+
+        <button onclick="hello()">Registration Page</button>
+        <button onclick="gello()">Dashboard Page</button>
+        <button onclick="chello()">Vaccinated Page</button>
+    </nav>
+    <div class="filterDiv">
+        <h3>Filter </h3>
+        <select name="" id="vaccineFilter">
+            <option>Vaccine</option>
+            <option id="Covaxin">Covaxin</option>
+            <option id="Covishield">Covishield</option>
+            <option id="Sputnik">Sputnik</option>
+        </select>
+
+        <select name="" id="priorityFilter">
+            <option>Priority</option>
+            <option id="high">High</option>
+            <option id="medium">Medium</option>
+            <option id="low">Low</option>
+        </select>
+
+        <button id="ageSorting">sort by Age</button>
+    </div>
+    <table style="margin: auto">
+        <thead id="thead">
+            <th>Name</th>
+            <th>Age</th>
+            <th>Designation</th>
+            <th>Priority</th>
+            <th>Delete</th>
+            <th>Vaccinate</th>
+            <th>Get-OTP</th>
+            <th>OTP-Verify</th>
+        </thead>
+        <tbody id="row"> </tbody>
+    </table>
+</body>
+</html>
+<script>
+    let array = JSON.parse(localStorage.getItem("VaccinateData")) || [];
+    function hello() {
+        window.location.assign('./register.html')
+    }
+    function gello() {
+        window.location.assign('./dashboard.html')
+    }
+    function chello() {
+        window.location.assign("./vaccinated.html")
+    }
+    let registerData = JSON.parse(localStorage.getItem("registerData"))
+    console.log("dashboard entry data", registerData);
+
+    let vaccineFilter = document.getElementById("vaccineFilter");
+    // console.log(vaccineFilter)
+    vaccineFilter.onchange = (() => {
+        let filterArr = []
+        for (let i = 0; i < registerData.length; i++) {
+            if (registerData[i].vaccine == vaccineFilter.value) {
+                filterArr.push(registerData[i])
+            }
+        }
+        row.innerHTML = "";
+        mapDashboardData(filterArr)
+        console.log("filtering successfull")
+    })
+
+    //////priority Filter////////////////
+    let priorityFilter = document.getElementById("priorityFilter");
+    priorityFilter.onchange = (() => {
+        let filterArr = []
+        for (let i = 0; i < registerData.length; i++) {
+            if (registerData[i].priority == priorityFilter.value.toLowerCase()) {
+                filterArr.push(registerData[i])
+                // console.log("filtering successfull")
+            }
+            else {
+                row.innerHTML = "NO DATA WAS FOUND"
+            }
+        }
+        row.innerHTML = "";
+        mapDashboardData(filterArr)
+    })
+    /////////////////sort by age/////////////
+    let ageSorting = document.getElementById('ageSorting');
+    ageSorting.onclick = (() => {
+        let sortArr = [...JSON.parse(localStorage.getItem("registerData")).sort((a, b) => (a.age - b.age))]
+        row.innerHTML = "";
+        mapDashboardData(sortArr)
+        console.log("sorting done")
+    })
+
+    function otpMatched(uniqueId, otpNum) {
+        let flag
+        for (let j = 0; j < registerData.length; j++) {
+            if (registerData[j].uniqueId == uniqueId) {
+                registerData[j].otp = otpNum;
+            }
+        }
+        console.log("after otp add", registerData)
+    }
+
+    function mapDashboardData(data) {
+        data.map((e) => {
+            // let rowkhap = document.createElement('tr');
+            let row = document.getElementById('row')
+            var tr = document.createElement('tr');
+
+            var td1 = document.createElement('td');
+            td1.innerHTML = e.name;
+            tr.appendChild(td1);
+
+            var td2 = document.createElement('td');
+            td2.innerHTML = e.age;
+            tr.appendChild(td2)
+
+            var td3 = document.createElement('td');
+            td3.innerHTML = e.designation;
+            tr.appendChild(td3)
+
+            var td4 = document.createElement('td');
+            td4.innerHTML = e.priority;
+            tr.appendChild(td4)
+
+            let deleteButton = document.createElement("td");
+            deleteButton.setAttribute("id", "deleteButton");
+            let dBtn = document.createElement("button")
+            dBtn.setAttribute("id", "dBtn")
+            dBtn.innerHTML = "Delete";
+            dBtn.style.backgroundColor = 'red';
+            dBtn.style.borderRadius = "3px";
+            dBtn.style.fontSize = "1rem";
+            dBtn.style.color = "white";
+            dBtn.onclick = (() => {
+                tr.innerHTML = "";
+                deleteFun(e.uniqueId)
+            })
+            deleteButton.append(dBtn)
+            tr.appendChild(deleteButton)
+
+            let vaccinateButton = document.createElement("td");
+            vaccinateButton.setAttribute("id", "vaccinateButton");
+            let vBtn = document.createElement("button")
+            vBtn.setAttribute("id", "vBtn")
+            vBtn.innerHTML = "Vaccinate";
+            vBtn.style.backgroundColor = 'green';
+            vBtn.style.borderRadius = "3px";
+            vBtn.style.fontSize = "1rem";
+            vBtn.style.color = "white";
+            vBtn.onclick = (() => {
+                doneBtn.disabled = false;
+            })
+            vaccinateButton.append(vBtn)
+            tr.appendChild(vaccinateButton)
+
+            let otpButton = document.createElement("td");
+            otpButton.setAttribute("id", "otpButton");
+            let otp = document.createElement("button")
+            otp.setAttribute("id", "otp")
+            otp.innerHTML = "OTP";
+            otp.style.fontSize = "1rem";
+            otp.onclick = (() => {
+                let otpNum = Math.floor(Math.random() * (9999 - 1000) + 1000);
+                otpMatched(e.uniqueId, otpNum)
+                alert(`${otpNum} is your OTP`)
+            })
+            otpButton.append(otp)
+            tr.appendChild(otpButton)
+
+            let inputDiv = document.createElement("td");
+            inputDiv.setAttribute("id", "inputDiv");
+            inputDiv.style.display = "flex";
+
+            let otpInput = document.createElement("input");
+            otpInput.setAttribute("id", "otpInput");
+
+            let doneBtn = document.createElement("button");
+            doneBtn.setAttribute("id", "doneBtn");
+            doneBtn.innerHTML = "Done"
+            doneBtn.disabled = true;
+            doneBtn.onclick = (() => {
+                let flag = false;
+                for (let i = 0; i < data.length; i++) {
+                    console.log(data[i].otp, otpInput.value)
+                    if (data[i].otp == otpInput.value && data[i].uniqueId == e.uniqueId) {
+                        alert(`${data[i].name} added to Queue`);
+                        flag = true;
+                        setTimeout(() => {
+                            alert(`Vaccinating  ${data[i].vaccine}`)
+                        }, 5000);
+                        setTimeout(() => {
+                            alert(`${data[i].name} Vaccinated`);
+                            tr.innerHTML = "";
+                            array.push(data[i])
+                            localStorage.setItem("VaccinateData", JSON.stringify(array))
+                            deleteFun(e.uniqueId)
+                            console.log("row deleted")
+                        }, 10000)
+                        break;
+                    }
+                }
+                if (!flag) {
+                    alert("Otp not matched")
+                }
+            })
+
+            inputDiv.append(otpInput, doneBtn)
+            tr.appendChild(inputDiv)
+
+            row.appendChild(tr)
+        })
+    }
+    mapDashboardData(registerData)
+
+    function deleteFun(uniqueId) {
+        var newarr = []
+        for (let i = 0; i < registerData.length; i++) {
+            if (registerData[i].uniqueId != uniqueId) {
+                newarr.push(registerData[i])
+            }
+        }
+
+        console.log("habjigubji", newarr)
+        localStorage.setItem("registerData", JSON.stringify(newarr))
+    }
+
+
+
+
+
+
+
+</script>
