@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <form >
+        <label>Email : </label>
+        <input type="email" id="email" />
+        <br>
+        <label>Password : </label>
+        <input type="password" id="password" />
+        <br>
+        <input type="submit" value="submit"  id="submit"/>
+    </form>
+</body>
+</html>
+<script>
+   
+    document.addEventListener("submit",function(event){
+        event.preventDefault();
+             let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+
+        fetch("https://reqres.in/api/login",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                email:email,
+                password:password,
+            })
+        }).then((res)=>{
+            return res.json();
+        }).then((data)=>{
+            
+            console.log(data) ;
+                       localStorage.setItem("token",JSON.stringify(data));
+            
+           
+        })
+        window.location.assign('./restaurant.html')
+    })
+</script>

@@ -1,0 +1,15 @@
+/* ////////////restaurant page/////////////////// */
+body{
+    margin: auto;
+}
+.mapDiv{
+    /* margin: auto; */
+    display: grid;
+    grid-template-columns: repeat(4,300px);
+    grid-gap: 20px;
+    /* background-color: black; */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    /* color: greenyellow; */
+    margin-top: 9%;
+    margin-left: 6%;
+}

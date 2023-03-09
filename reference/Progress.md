@@ -108,6 +108,10 @@ localStorage.clear();
 
 //data-id(using for filter)
 
+//object 3rd video(nested object, set variable as property value)
+
+//constructor function
+
 
 
 

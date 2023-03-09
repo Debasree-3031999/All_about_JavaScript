@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant page</title>
+</head>
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>
+    <div class="mapDiv"></div>
+    <div id="pagination">
+    </div>
+</body>
+
+</html>
+<script>
+    let token = JSON.parse(localStorage.getItem("token"));
+    console.log(token)
+    let mapdata;
+    fetch("https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/getrestaurants?limit=20").then((res) => {
+        return res.json();
+    }).then((data) => {
+        console.log(data)
+        mapdata = data.data
+        mapFun(mapdata);
+        paginate(data.totalPages)
+
+    })
+
+    
+
+    const mapFun = (mapdata) => {
+        // console.log(mapdata)
+        let mapDiv = document.querySelector(".mapDiv")
+        mapDiv.innerHTML = "";
+        mapdata.map((e) => {
+            // console.log(e)
+            let card = document.createElement("div");
+            card.style.border = "1px solid black";
+            card.style.backgroundColor = "black"
+            card.style.color = "white";
+            card.style.borderRadius = "5px"
+            card.style.boxShadow = "1px 5px 6px 2px black"
+
+
+            let imageDiv = document.createElement("div")
+            let image = document.createElement("img");
+            image.setAttribute("class", "image")
+            image.src = e.image;
+            image.style.width = "100%"
+            // imageDiv.style.margin="auto"
+            imageDiv.append(image)
+
+            let flex1 = document.createElement("div");
+            flex1.style.display = "flex";
+            flex1.style.justifyContent = "spaceAround";
+
+            let name = document.createElement("p");
+            name.setAttribute("class", "name")
+            name.innerHTML = "Restaurant Name : " + e.name;
+
+            let type = document.createElement("p");
+            type.setAttribute("class", "type")
+            type.innerHTML = "Restaurant Type : " + e.type;
+
+            flex1.append(name, type)
+
+            let flex2 = document.createElement("div");
+            flex2.style.display = "flex";
+            flex2.style.justifyContent = "spaceAround";
+
+            let votes = document.createElement("p");
+            votes.setAttribute("class", "votes")
+            votes.innerHTML = "Votes(" + e.number_of_votes + ")";
+
+            let price = document.createElement("p");
+            price.setAttribute("class", "price")
+            price.innerHTML = "Price_start  Rs/-" + parseInt(e.price_starts_from);
+
+            let rating = document.createElement("p");
+            rating.setAttribute("class", "rating")
+            rating.innerHTML = e.rating;
+            flex2.style.color = "greenyellow"
+            // flex2.style.justifyContent="spaceBetween"
+
+
+            flex2.append(votes, rating, price)
+
+            card.append(imageDiv, flex1, flex2);
+            mapDiv.append(card)
+
+
+        })
+    }
+    let pagination = document.getElementById('pagination')
+
+    const createButton = (i) => {
+        let paginateButton = document.createElement("button");
+        paginateButton.innerHTML = i
+
+        paginateButton.onclick = () => {
+            fetch(`https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/getrestaurants?limit=20&page=${i}`).then((res)=>{
+                return res.json();
+            }).then((data)=>{
+                mapFun(data.data)
+                console.log("pagination working", data.data)
+            })
+        }
+        return paginateButton;
+    }
+
+    const paginate = (pages) => {
+        // console.log(pages)
+        for (let i = 1; i <= pages; i++) {
+            pagination.append(createButton(i))
+        }
+    }
+
+</script>
