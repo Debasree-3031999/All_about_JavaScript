@@ -112,6 +112,10 @@ localStorage.clear();
 
 //constructor function
 
+//useparams is used for taking any parameter from url (let{id}=useParams())
+
+
+//MONGODB--->(database-->cluster-->collections-->documents)
 
 
 
